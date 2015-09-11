@@ -79,3 +79,7 @@ forceRespawn: false
 # Whether or not to show unavailable classes in the GUI
 # Input: boolean; default: false
 showUnavailableClasses: false
+
+# If ViewIt is enabled UltimateArena will use its scoreboard API
+# You can download ViewIt at: https://github.com/t7seven7t/ViewIt/releases
+enableViewItIntegration: true

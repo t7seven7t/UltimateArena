@@ -139,6 +139,7 @@ public abstract class Arena implements Reloadable
 	protected boolean inLobby;
 	protected boolean inGame;
 
+	@Getter
 	protected String name;
 
 	protected Mode gameMode = Mode.IDLE;
@@ -280,6 +281,14 @@ public abstract class Arena implements Reloadable
 		{
 			ClassSelectionGUI csGUI = new ClassSelectionGUI(plugin, player);
 			plugin.getGuiHandler().open(player, csGUI);
+		}
+
+		if (plugin.isViewItEnabled()) {
+			if (gameMode == Mode.LOBBY) {
+				plugin.getViewItHandler().addLobbyElements(player);
+			} else if (gameMode == Mode.INGAME){
+				plugin.getViewItHandler().addIngameElements(player);
+			}
 		}
 
 		tellPlayers("&a{0} has joined the arena! ({1}/{2})", pl.getName(), active.size(), maxPlayers);
@@ -871,6 +880,10 @@ public abstract class Arena implements Reloadable
 		if (! disconnected)
 			inactive.add(ap);
 
+		if (plugin.isViewItEnabled()) {
+			plugin.getViewItHandler().removeAllElements(ap.getPlayer());
+		}
+
 		// Add them to the final leaderboard if applicable
 		if (finalLeaderboard != null)
 		{
@@ -990,6 +1003,13 @@ public abstract class Arena implements Reloadable
 
 			this.gameTimer = maxGameTime;
 			this.startTimer = -1;
+
+			if (plugin.isViewItEnabled()) {
+				for (ArenaPlayer ap : active) {
+					plugin.getViewItHandler().removeAllElements(ap.getPlayer());
+					plugin.getViewItHandler().addIngameElements(ap.getPlayer());
+				}
+			}
 
 			onStart();
 			spawnAll();
@@ -1522,5 +1542,20 @@ public abstract class Arena implements Reloadable
 	public String toString()
 	{
 		return name;
+	}
+
+	public Mode getGameMode() {
+		return gameMode;
+	}
+
+	public int getRemainingTime() {
+		switch (gameMode) {
+			case LOBBY:
+				return startTimer;
+			case INGAME:
+				return gameTimer;
+			default:
+				return -1;
+		}
 	}
 }

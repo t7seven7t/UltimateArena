@@ -61,8 +61,11 @@ import org.bukkit.potion.PotionEffect;
 @Getter @Setter
 public final class ArenaPlayer
 {
+	@Getter
 	private int kills;
+	@Getter
 	private int deaths;
+	@Getter
 	private int killStreak;
 	private int gameXP;
 	private int amtKicked;
@@ -71,6 +74,7 @@ public final class ArenaPlayer
 	private boolean canReward;
 	private boolean changeClassOnRespawn;
 
+	@Getter
 	private Team team = Team.RED;
 	private List<Double> transactions = new ArrayList<>();
 	private Map<String, Object> data = new HashMap<>();
@@ -80,6 +84,7 @@ public final class ArenaPlayer
 	private UUID uniqueId;
 	private Location spawnBack;
 
+	@Getter
 	private ArenaClass arenaClass;
 	private PlayerData playerData;
 

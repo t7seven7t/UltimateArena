@@ -81,6 +81,7 @@ public final class ArenaClass extends Configuration
 
 	// ---- Transient
 	private transient File file;
+	@Getter
 	private transient String name;
 	private transient boolean loaded;
 

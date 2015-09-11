@@ -73,6 +73,7 @@ import net.dmulloy2.ultimatearena.handlers.SpectatingHandler;
 import net.dmulloy2.ultimatearena.integration.EssentialsHandler;
 import net.dmulloy2.ultimatearena.integration.ProtocolHandler;
 import net.dmulloy2.ultimatearena.integration.VaultHandler;
+import net.dmulloy2.ultimatearena.integration.ViewItHandler;
 import net.dmulloy2.ultimatearena.integration.WorldEditHandler;
 import net.dmulloy2.ultimatearena.listeners.BlockListener;
 import net.dmulloy2.ultimatearena.listeners.EntityListener;
@@ -123,6 +124,7 @@ public class UltimateArena extends SwornPlugin implements Reloadable
 	private @Getter WorldEditHandler worldEditHandler;
 	private @Getter ProtocolHandler protocolHandler;
 	private @Getter VaultHandler vaultHandler;
+	private @Getter ViewItHandler viewItHandler;
 
 	// Public lists and maps
 	private @Getter Map<String, ArenaJoinTask> waiting = new HashMap<>();
@@ -306,6 +308,14 @@ public class UltimateArena extends SwornPlugin implements Reloadable
 		{
 			worldEditHandler = new WorldEditHandler(this);
 		} catch (Throwable ex) { }
+
+		try
+		{
+			if (getConfig().getBoolean("enableViewItIntegration"))
+			{
+				viewItHandler = new ViewItHandler(this);
+			}
+		} catch (Throwable ex) { }
 	}
 
 	public final boolean isEssentialsEnabled()
@@ -326,6 +336,11 @@ public class UltimateArena extends SwornPlugin implements Reloadable
 	public final boolean isWorldEditEnabled()
 	{
 		return worldEditHandler != null && worldEditHandler.isEnabled();
+	}
+
+	public final boolean isViewItEnabled()
+	{
+		return viewItHandler != null && viewItHandler.isEnabled();
 	}
 
 	// Loading
